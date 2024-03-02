@@ -20,5 +20,8 @@ int		isFlightToDestAirport(const Flight* pFlight, const char* code);
 void	printFlight(const Flight* pFlight);
 Airport*	setAiportToFlight(const AirportManager* pManager, const char* msg);
 int		isPlaneTypeInFlight(const Flight* pFlight, ePlaneType type);
+int		compareFlightsByDate(const void* v1, const void* v2);
+int		compareFlightsBySrcCode(const void* v1, const void* v2);
+int		compareFlightsByDstCode(const void* v1, const void* v2);
 
 #endif

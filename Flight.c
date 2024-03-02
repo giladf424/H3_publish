@@ -47,6 +47,33 @@ int		isPlaneTypeInFlight(const Flight* pFlight, ePlaneType type)
 	return (pFlight->flightPlane.type == type);
 }
 
+int compareFlightsByDate(const void* v1, const void* v2)
+{
+	const Flight* f1 = (const Flight*)v1;
+	const Flight* f2 = (const Flight*)v2;
+	if (f1->date.year == f2->date.year)
+	{
+		if (f1->date.month == f2->date.month)
+			return f1->date.day - f2->date.day;
+		return f1->date.month - f2->date.month;
+	}
+	return f1->date.year - f2->date.year;
+}
+
+int compareFlightsBySrcCode(const void* v1, const void* v2)
+{
+	const Flight* f1 = (const Flight*)v1;
+	const Flight* f2 = (const Flight*)v2;
+	return strcmp(f1->sourceCode, f2->sourceCode);
+}
+
+int compareFlightsByDstCode(const void* v1, const void* v2)
+{
+	const Flight* f1 = (const Flight*)v1;
+	const Flight* f2 = (const Flight*)v2;
+	return strcmp(f1->destCode, f2->destCode);
+}
+
 
 void	printFlight(const Flight* pFlight)
 {

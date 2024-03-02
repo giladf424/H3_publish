@@ -134,3 +134,53 @@ void	freeCompany(Airline* pComp)
 	free(pComp->planeArr);
 	free(pComp->name);
 }
+
+void sortFlight(Airline* pComp)
+{
+	int type = getSortType();
+	if (type == 1)
+		qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight), compareFlightsBySrcCode);
+	else if(type == 2)
+		qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight), compareFlightsByDstCode);
+	else
+		qsort(pComp->flightArr, pComp->flightCount, sizeof(Flight), compareFlightsByDate);
+	pComp->type = type;
+}
+
+int getSortType()
+{
+	int option;
+	printf("\n\n");
+	do {
+		printf("Please enter one of the following types\n");
+		for (int i = 1; i < eNofSortTypes; i++)
+			printf("%d for %s\n", i, SortTypeStr[i]);
+		scanf("%d", &option);
+	} while (option < 1 || option >= eNofPlaneTypes);
+	return option;
+}
+
+void findFlight(const Airline* pComp)
+{
+	Flight f;
+	Flight* f1;
+	if (pComp->type == 0)
+	{
+		printf("The flights array isn't sorted , sort it and try again.\n");
+		return;
+	}
+	else if (pComp->type == 3)
+	{
+		printf("Please enter the flight date(dd/mm/yyyy)\n");
+		scanf("%d%d%d", f.date.day, f.date.month, f.date.year);
+		f1 = (Flight*)bsearch(&f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDate);
+		if (!f1)
+			printf("There is no flight with the date you selected\n");
+		else
+		{
+			printFlight(f1);
+		}
+	}
+
+	
+}
