@@ -8,7 +8,7 @@
 
 int	initManager(AirportManager* pManager)
 {
-	LIST list = { NULL, NULL };
+	LIST list;
 	if (!L_init(&list)) {
 		return 0;
 	}
@@ -56,8 +56,15 @@ int  initAirport(Airport* pPort, AirportManager* pManager)
 
 Airport* findAirportByCode(const AirportManager* pManager, const char* code)
 {
-	NODE* p = &(pManager->airports.head);
-	return L_find(p, code, isAirportCode);
+	if (pManager->airports.head.next == NULL)
+	{
+		return NULL;
+	}
+	else {
+		NODE* p = &(pManager->airports.head);
+		return L_find(p, code, isAirportCode);
+	}
+
 }
 
 int checkUniqeCode(const char* code, const AirportManager* pManager)
