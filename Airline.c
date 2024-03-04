@@ -19,7 +19,7 @@ void	initAirline(Airline* pComp)
 
 int	addFlight(Airline* pComp,const AirportManager* pManager)
 {
-	if (pManager->airportsCount < 2)
+	if (getAirportAmount(pManager) < 2)
 	{
 		printf("There are not enough airport to set a flight\n");
 		return 0;
