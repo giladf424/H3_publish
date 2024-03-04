@@ -162,9 +162,10 @@ int getSortType()
 
 void findFlight(const Airline* pComp)
 {
-	Flight* f = (Flight*)malloc(sizeof(Flight));
-	if (!f)
-		return;
+	Flight* f = NULL;
+	char b[MAX_STR_LEN];
+	/*if (!f)
+		return;*/
 	if (pComp->type == 0)
 	{
 		printf("The flights array isn't sorted , sort it and try again.\n");
@@ -173,13 +174,15 @@ void findFlight(const Airline* pComp)
 	else if (pComp->type == 1)
 	{
 		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
-		scanf("%s", &f->sourceCode);
-		f = (Flight*)bsearch(f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsBySrcCode);
+		myGets(b, MAX_STR_LEN);
+		strcpy(f->sourceCode, b);
+		f = (Flight*)bsearch(&f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsBySrcCode);
 	}
 	else if (pComp->type == 2)
 	{
 		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
 		scanf("%s", &f->destCode);
+
 		f = (Flight*)bsearch(f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDstCode);
 	}
 	else
