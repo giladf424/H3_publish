@@ -8,8 +8,10 @@
 
 int	initManager(AirportManager* pManager)
 {
-	LIST list;
-	L_init(&list);
+	LIST list = { NULL, NULL };
+	if (!L_init(&list)) {
+		return 0;
+	}
 	pManager->airports = list;
 	return 1;
 }
@@ -20,14 +22,15 @@ int	addAirport(AirportManager* pManager)
 	if (!pPort)
 		return 0;
 
-	if (!initAirport(pPort, pManager))
+	if(!initAirport(pPort, pManager))
 	{
 		freeAirport(pPort);
 		free(pPort);
 		return 0;
 	}
 
-	if (!L_insert(&pManager->airports, pPort))
+
+	if (!L_insert(&pManager->airports.head, pPort))
 	{
 		freeAirport(pPort);
 		free(pPort);
@@ -67,7 +70,6 @@ int checkUniqeCode(const char* code, const AirportManager* pManager)
 	return 1;
 }
 
-
 void	printAirports(const AirportManager* pManager)
 {
 	printf("there are %d airports\n", getAirportAmount(pManager));
@@ -78,7 +80,6 @@ void	freeManager(AirportManager* pManager)
 {
 	freeAirportArr(pManager);
 }
-
 
 void	freeAirportArr(AirportManager* pManager)
 {
