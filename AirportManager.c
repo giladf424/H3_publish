@@ -52,7 +52,15 @@ int addAirportToCorrecPlace(AirportManager* pManager, Airport* pPort)
 
 	if(pNode->next != NULL)
 	{
-		pNode = L_find(pNode, pPort->code, isAirportCode);
+		while(pNode->next != NULL)
+		{
+			Airport* p = (Airport*) pNode->next->key;
+			if(strcmp(p->code, pPort->code) > 0)
+			{
+				break;
+			}
+			pNode = pNode->next;
+		}
 	}
 
 	if (!L_insert(pNode, pPort))
