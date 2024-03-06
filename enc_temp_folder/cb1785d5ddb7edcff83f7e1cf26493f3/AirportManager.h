@@ -26,7 +26,4 @@ void	freeManager(AirportManager* pManager);
 void	freeAirportArr(AirportManager* pManager);
 
 int getAirportAmount(const AirportManager* pManager);
-
-int addAirportToCorrecPlace(AirportManager* pManager, Airport* pPort);
-
 #endif

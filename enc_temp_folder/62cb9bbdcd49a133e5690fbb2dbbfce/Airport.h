@@ -17,7 +17,7 @@ int		getAirportName(Airport* pPort);
 char*	allocateRightLength(char** wordsArray,int count,int totalLength);
 void	changeNameOneWord(char* name, const char* word);
 void	changeName(char* name,int count, char** wordsArray);
-int isNotAirportCode(const Airport* pPort1, const char* code);
+
 void    getAirportCode(char* code);
 void	printAirport(const Airport* pPort);
 void	freeAirport(Airport* pPort);

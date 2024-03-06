@@ -29,11 +29,6 @@ int	isAirportCode(const Airport* pPort1, const char* code)
 	return 0;
 }
 
-int isNotAirportCode(const Airport* pPort1, const char* code)
-{
-	return !isAirportCode(pPort1, code);
-}
-
 int	initAirportNoCode(Airport* pPort)
 {
 	if (!getAirportName(pPort))

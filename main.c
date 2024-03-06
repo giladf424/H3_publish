@@ -42,6 +42,7 @@ int main()
 		case eAddAirport:
 			if (!addAirport(&manager))
 				printf("Error adding airport\n");
+			printAirports(&manager);
 			break;
 
 		case eAddFlight:

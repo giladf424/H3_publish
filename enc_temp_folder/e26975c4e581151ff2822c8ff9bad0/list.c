@@ -81,7 +81,7 @@ const NODE* L_find(const NODE* pNode, DATA Value, int(*compare)(const void*, con
 	const NODE* temp = NULL;
 	while (pNode->next != NULL)
 	{
-		if (compare(pNode->next->key, Value) == 0)
+		if (compare(pNode->key, Value) == 0)
 		{
 			temp = pNode;
 			break;
