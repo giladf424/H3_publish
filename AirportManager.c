@@ -99,7 +99,7 @@ Airport* findAirportByCode(const AirportManager* pManager, const char* code)
 			return NULL;
 		}
 		else {
-			return p;
+			return p->key;
 		}
 	}
 }

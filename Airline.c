@@ -162,43 +162,43 @@ int getSortType()
 
 void findFlight(const Airline* pComp)
 {
-	Flight* f = (Flight*)malloc(sizeof(Flight));
-	if (!f)
-	{
-		printf("Memory allocation error\n");
-		return;
-	}
-	char b[MAX_STR_LEN];
+	Date date;
+	Flight f;
+	Flight* pF;
+	Flight** foundflight = NULL;
+
+	char code[MAX_STR_LEN];
 
 	if (pComp->type == 0)
 	{
 		printf("The flights array isn't sorted , sort it and try again.\n");
-		free(f);
 		return;
 	}
 	else if (pComp->type == 1)
 	{
 		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
-		myGets(b, MAX_STR_LEN);
-		strcpy(f->sourceCode, b);
-		f = (Flight*)bsearch(f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsBySrcCode);
+		getAirportCode(code);
+		strcpy(f.sourceCode,code);
+		pF = &f;
+		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsBySrcCode);
 	}
 	else if (pComp->type == 2)
 	{
 		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
-		myGets(b, MAX_STR_LEN);
-		strcpy(f->sourceCode, b);
-		f = (Flight*)bsearch(f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDstCode);
+		getAirportCode(code);
+		strcpy(f.destCode, code);
+		pF = &f;
+		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDstCode);
 	}
 	else
 	{
-		printf("Please enter the flight date(dd/mm/yyyy)\n");
-		scanf("%d%d%d", &f->date.day, &f->date.month, &f->date.year);
-		f = (Flight*)bsearch(f, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDate);
+		getCorrectDate(&date);
+		f.date = date;
+		pF = &f;
+		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDate);
 	}
-	if (!f)
+	if (!foundflight)
 		printf("The flight you were looking for does not exist\n");
 	else
-		printFlight(f);
-	free(f);
+		printFlight(*foundflight);
 }
