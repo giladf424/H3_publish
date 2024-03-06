@@ -86,7 +86,13 @@ Airport* findAirportByCode(const AirportManager* pManager, const char* code)
 	}
 	else {
 		NODE* p = L_find(&(pManager->airports.head), code, isNotAirportCode);
-		return p->key;
+		if (!p)
+		{
+			return NULL;
+		}
+		else {
+			return p;
+		}
 	}
 }
 
