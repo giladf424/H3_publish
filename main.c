@@ -21,8 +21,12 @@ int main()
 {
 	AirportManager	manager;
 	Airline			company;
-
-	initManager(&manager);
+	
+	if(!initManager(&manager, "authority_airport.txt"))
+	{
+		printf("Error init airport manager\n");
+		exit(1);
+	}
 	initAirline(&company);
 
 	int option;
@@ -80,6 +84,8 @@ int main()
 			break;
 		}
 	} while (!stop);
+
+	saveManagerToFile(&manager, "authority_airport.txt");
 
 	freeManager(&manager);
 	freeCompany(&company);

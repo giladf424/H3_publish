@@ -47,7 +47,6 @@ void	printAirport(const Airport* pPort)
 {
 	printf("Airport name:%-20s\t", pPort->name);
 	printf("Country: %-20s\t Code:%s\n", pPort->country, pPort->code);
-
 }
 
 

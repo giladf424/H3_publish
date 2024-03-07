@@ -9,7 +9,9 @@ typedef struct
 	LIST	airports;
 }AirportManager;
 
-int		initManager(AirportManager* pManager);
+int		initManagerFile(AirportManager* pManager);
+
+int		initManager(AirportManager* pManager, const char* fileName);
 
 int		addAirport(AirportManager* pManager);
 
@@ -25,8 +27,11 @@ void	freeManager(AirportManager* pManager);
 
 void	freeAirportArr(AirportManager* pManager);
 
-int getAirportAmount(const AirportManager* pManager);
+int		getAirportAmount(const AirportManager* pManager);
 
-int addAirportToCorrecPlace(AirportManager* pManager, Airport* pPort);
+int		addAirportToCorrecPlace(AirportManager* pManager, Airport* pPort);
+
+int		saveManagerToFile(const AirportManager* pManager, const char* fileName);
+
 
 #endif
