@@ -46,6 +46,7 @@ int	addFlight(Airline* pComp,const AirportManager* pManager)
 	}
 	pComp->flightArr[pComp->flightCount] = pFlight;
 	pComp->flightCount++;
+	pComp->type = eNotSorted;
 	return 1;
 }
 
@@ -87,12 +88,12 @@ void printCompany(const Airline* pComp)
 
 void	printFlightArr(Flight** arr, int size)
 {
-	generalArrayFunction(arr, size, sizeof(Flight*), (void(*)(void*))printFlight);
+	generalArrayFunction(arr, size, sizeof(Flight*), printFlight);
 }
 
 void	printPlanesArr(Plane* arr, int size)
 {
-	generalArrayFunction(arr, size, sizeof(Plane), (void(*)(void*))printPlane);
+	generalArrayFunction(arr, size, sizeof(Plane), printPlane);
 }
 
 void	doPrintFlightsWithPlaneType(const Airline* pComp)
@@ -164,36 +165,32 @@ void findFlight(const Airline* pComp)
 	Flight f;
 	Flight* pF;
 	Flight** foundflight = NULL;
-
 	char code[MAX_STR_LEN];
 
-	if (pComp->type == 0)
+	switch (pComp->type)
 	{
+	case eNotSorted:
 		printf("The flights array isn't sorted , sort it and try again.\n");
 		return;
-	}
-	else if (pComp->type == 1)
-	{
-		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
+		break;
+	case eSrcCode:
 		getAirportCode(code);
 		strcpy(f.sourceCode,code);
 		pF = &f;
 		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsBySrcCode);
-	}
-	else if (pComp->type == 2)
-	{
-		printf("Please enter the flight %s\n", SortTypeStr[pComp->type]);
+		break;
+	case eDstCode:
 		getAirportCode(code);
 		strcpy(f.destCode, code);
 		pF = &f;
 		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDstCode);
-	}
-	else
-	{
+		break;
+	case eDate:
 		getCorrectDate(&date);
 		f.date = date;
 		pF = &f;
 		foundflight = (Flight**)bsearch(&pF, pComp->flightArr, pComp->flightCount, sizeof(Flight*), compareFlightsByDate);
+		break;
 	}
 	if (!foundflight)
 		printf("The flight you were looking for does not exist\n");
