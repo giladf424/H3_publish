@@ -105,7 +105,7 @@ void	doPrintFlightsWithPlaneType(const Airline* pComp)
 	{
 		if (isPlaneTypeInFlight(pComp->flightArr[i], type))
 		{
-			printFlight(pComp->flightArr[i]);
+			printFlight(&pComp->flightArr[i]);
 			count++;
 		}
 	}
@@ -195,5 +195,5 @@ void findFlight(const Airline* pComp)
 	if (!foundflight)
 		printf("The flight you were looking for does not exist\n");
 	else
-		printFlight(*foundflight);
+		printFlight(foundflight);
 }

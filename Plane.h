@@ -24,6 +24,6 @@ const char*		GetPlaneTypeStr(int type);
 int				getPlaneSN(Plane* planeArr, int planeCount);
 Plane*			findPlaneBySN(Plane* planeArr, int count, int sn);
 int				isSerialNumUnique(Plane* planeArr, int planeCount, int num);
-void			printPlane(const Plane* pPlane);
+void			printPlane(const void* pPlane);
 void			freePlane(Plane* pPlane);
 
