@@ -38,10 +38,6 @@ int	addAirport(AirportManager* pManager)
 		free(pPort);
 		return 0;
 	}
-	Airport* p = (Airport*) pManager->airports.head.next->key;
-	printf("%s\n", p->code);
-	printf("%s\n", p->name);
-	printf("%s\n", p->country);
 
 	return 1;
 }

@@ -74,3 +74,13 @@ char** splitCharsToWords(char* str, int* pCount, int* pTotalLength)
 	*pCount = count;
 	return wordsArray;
 }
+
+void generalArrayFunction(const void* arr, int size, int typeSize, void(*func)(void* element))
+{
+	//this func is  a general function that is able to print and free any array of any type like for example the types of Flight and Plane
+	
+	for (int i = 0; i < size; i++)
+	{
+		func((char*)arr + i * typeSize);
+	}
+}

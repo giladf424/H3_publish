@@ -87,14 +87,12 @@ void printCompany(const Airline* pComp)
 
 void	printFlightArr(Flight** arr, int size)
 {
-	for (int i = 0; i < size; i++)
-		printFlight(arr[i]);
+	generalArrayFunction(arr, size, sizeof(Flight*), (void(*)(void*))printFlight);
 }
 
 void	printPlanesArr(Plane* arr, int size)
 {
-	for (int i = 0; i < size; i++)
-		printPlane(&arr[i]);
+	generalArrayFunction(arr, size, sizeof(Plane), (void(*)(void*))printPlane);
 }
 
 void	doPrintFlightsWithPlaneType(const Airline* pComp)

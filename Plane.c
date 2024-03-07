@@ -64,9 +64,11 @@ Plane* findPlaneBySN(Plane* planeArr, int count, int sn)
 	return NULL;
 }
 
-void	printPlane(const Plane* pPlane)
+void	printPlane(const void* pPlane)
 {
-	printf("Plane: serial number:%d, type %s\n",pPlane->serialNum, PlaneTypeStr[pPlane->type]);
+	const Plane* pP = (const Plane*)pPlane;
+	
+	printf("Plane: serial number:%d, type %s\n",pP->serialNum, PlaneTypeStr[pP->type]);
 
 }
 

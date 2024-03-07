@@ -75,12 +75,13 @@ int compareFlightsByDstCode(const void* v1, const void* v2)
 }
 
 
-void	printFlight(const Flight* pFlight)
+void	printFlight(const void* pFlight)
 {
-	printf("Flight From %s To %s\t",pFlight->sourceCode, pFlight->destCode);
-	printDate(&pFlight->date);
+	const Flight* pF = *(const Flight**)pFlight;
+	printf("Flight From %s To %s\t",pF->sourceCode, pF->destCode);
+	printDate(&pF->date);
 	printf("\t");
-	printPlane(&pFlight->flightPlane);
+	printPlane(&pF->flightPlane);
 }
 
 Airport* setAiportToFlight(const AirportManager* pManager, const char* msg)

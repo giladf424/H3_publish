@@ -20,7 +20,6 @@ int	isSameAirport(const Airport* pPort1, const Airport* pPort2)
 
 int	isAirportCode(const Airport* pPort1, const char* code)
 {
-	printAirport(pPort1);
 	if (!pPort1)
 		return 0;
 	if (strcmp(pPort1->code, code) == 0)
