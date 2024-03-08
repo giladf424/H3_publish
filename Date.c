@@ -49,3 +49,13 @@ void printDate(const Date* pDate)
 {
 	printf("Date: %d/%d/%d", pDate->day, pDate->month, pDate->year);
 }
+
+int writeDateToFile(FILE* fp, Date const* pDate)
+{
+	if (fwrite(pDate, 3 * sizeof(int), 1, fp) != 1)
+	{
+		printf("Error! the date wasn't written to the file\n");
+		return 0;
+	}
+	return 1;
+}

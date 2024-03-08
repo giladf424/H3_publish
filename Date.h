@@ -13,5 +13,6 @@ typedef struct
 void	getCorrectDate(Date* pDate);
 int		checkDate(char* date, Date* pDate);
 void	printDate(const Date* pDate);
+int		writeDateToFile(FILE*  fp, Date const* pDate);
 
 #endif
