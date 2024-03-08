@@ -3,6 +3,7 @@
 #include "Airline.h"
 #include "AirportManager.h"
 #include "General.h"
+#include "AirlineFile.h"
 
 typedef enum 
 { 
@@ -86,6 +87,7 @@ int main()
 	} while (!stop);
 
 	saveManagerToFile(&manager, "authority_airport.txt");
+	saveAirlineToFile(&company, "airline.bin");
 
 	freeManager(&manager);
 	freeCompany(&company);

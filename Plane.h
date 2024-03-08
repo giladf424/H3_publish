@@ -27,5 +27,3 @@ int				isSerialNumUnique(Plane* planeArr, int planeCount, int num);
 void			printPlane(const void* pPlane);
 void			freePlane(Plane* pPlane);
 int				writePlaneToBFile(FILE* fp, Plane const* pP);
-int				writePlaneArrToBFile(FILE* fp, Plane* arr, int count);
-

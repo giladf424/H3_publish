@@ -26,7 +26,7 @@ int writeCharToBFile(FILE* fp, int size, char const* arr, char const* msg)
 
 int writeStringToBFile(FILE* fp, char const* str, char const* msg)
 {
-	int len = strlen(str) + 1;
+	int len = (int)strlen(str) + 1;
 	if (writeIntToBFile(fp, len, msg ) != 1)
 	{
 		printf("%s", msg);

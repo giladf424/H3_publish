@@ -88,11 +88,3 @@ int writePlaneToBFile(FILE* fp, Plane const* pP)
 	return 1;
 }
 
-int writePlaneArrToBFile(FILE* fp, Plane* arr, int count)
-{
-	if (fwrite(&count, sizeof(int), 1, fp) != 1)
-		return 0;
-	if (fwrite(arr, sizeof(Plane), count, fp) != count)
-		return 0;
-	return 0;
-}

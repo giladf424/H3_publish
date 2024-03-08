@@ -86,18 +86,6 @@ int writeFlightToBFile(FILE* fp, Flight const* pF)
 	return 1;
 }
 
-int writeFlightArrToBFile(FILE* fp, Flight** arr, int count)
-{
-	if (!fp)
-		return 0;
-	if (fwrite(&count, sizeof(int), 1, fp) != 1)
-		return 0;
-	for (int i = 0; i < count; i++)
-		writeFlightToBFile(fp, arr[i]);
-	return 1;
-}
-
-
 void	printFlight(const void* pFlight)
 {
 	const Flight* pF = *(const Flight**)pFlight;
