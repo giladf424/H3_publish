@@ -3,6 +3,7 @@
 #include <ctype.h>
 #include "General.h"
 #include "Plane.h"
+#include "Files.h"
 
 
 
@@ -77,14 +78,13 @@ void			freePlane(Plane* pPlane)
 	//nothing to free
 }
 
-int writePlaneToBFile(FILE* fp, Plane* p)
+int writePlaneToBFile(FILE* fp, Plane const* pP)
 {
-	if (!fp)
+	if (fwrite(pP, 2*sizeof(int), 1, fp) != 1)
+	{
+		printf("Error! the plane wasn't written to file\n");
 		return 0;
-	if (fwrite(&p->serialNum, sizeof(int), 1, fp) != 1)
-		return 0;
-	if (fwrite(&p->type, sizeof(ePlaneType), 1, fp) != 1)
-		return 0;
+	}
 	return 1;
 }
 

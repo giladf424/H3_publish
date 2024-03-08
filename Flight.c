@@ -4,6 +4,7 @@
 #include <string.h>
 #include "Flight.h"
 #include "General.h"
+#include "Files.h"
 
 
 void	initFlight(Flight* pFlight,Plane* thePlane, const AirportManager* pManager)
@@ -72,25 +73,17 @@ int compareFlightsByDstCode(const void* v1, const void* v2)
 	return strcmp(f1->destCode, f2->destCode);
 }
 
-int writeFlightToBFile(FILE* fp, Flight* f)
+int writeFlightToBFile(FILE* fp, Flight const* pF)
 {
-	if (!fp)
+	if (writeCharToBFile(fp, IATA_LENGTH, &pF->sourceCode, "Error! flight source code wasn't written to file\n") != 1)
 		return 0;
-	int sLen = (int)strlen(f->sourceCode);
-	int dLen = (int)strlen(f->destCode);
-	if (fwrite(&sLen, sizeof(int), 1, fp) != 1)
+	if (writeCharToBFile(fp, IATA_LENGTH, &pF->destCode, "Error! flight destination code wasn't written to file\n") != 1)
 		return 0;
-	if (fwrite(&f->sourceCode, sizeof(char), sLen, fp) != sLen)
+	if (writeIntToBFile(fp, pF->flightPlane.serialNum, "Error! flight plane serial number wasn't written to file\n") != 1)
 		return 0;
-	if (fwrite(&dLen, sizeof(int), 1, fp) != 1)
+	if (writeDateToBFile(fp, &pF->date) != 1)
 		return 0;
-	if (fwrite(&f->destCode, sizeof(char), dLen, fp) != dLen)
-		return 0;
-	if (fwrite(&f->flightPlane.serialNum, sizeof(int), 1, fp) != 1)
-		return 0;
-	if (fwrite(&f->date, sizeof(int), 3, fp) != 3)
-		return 0;
-	return 0;
+	return 1;
 }
 
 int writeFlightArrToBFile(FILE* fp, Flight** arr, int count)
