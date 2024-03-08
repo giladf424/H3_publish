@@ -74,6 +74,38 @@ int compareFlightsByDstCode(const void* v1, const void* v2)
 	return strcmp(f1->destCode, f2->destCode);
 }
 
+int writeFlightToBFile(FILE* fp, Flight* f)
+{
+	if (!fp)
+		return 0;
+	int sLen = (int)strlen(f->sourceCode);
+	int dLen = (int)strlen(f->destCode);
+	if (fwrite(&sLen, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&f->sourceCode, sizeof(char), sLen, fp) != sLen)
+		return 0;
+	if (fwrite(&dLen, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&f->destCode, sizeof(char), dLen, fp) != dLen)
+		return 0;
+	if (fwrite(&f->flightPlane.serialNum, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&f->date, sizeof(int), 3, fp) != 3)
+		return 0;
+	return 0;
+}
+
+int writeFlightArrToBFile(FILE* fp, Flight** arr, int count)
+{
+	if (!fp)
+		return 0;
+	if (fwrite(&count, sizeof(int), 1, fp) != 1)
+		return 0;
+	for (int i = 0; i < count; i++)
+		writeFlightToBFile(fp, arr[i]);
+	return 1;
+}
+
 
 void	printFlight(const void* pFlight)
 {

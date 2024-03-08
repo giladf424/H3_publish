@@ -76,3 +76,23 @@ void			freePlane(Plane* pPlane)
 { 
 	//nothing to free
 }
+
+int writePlaneToBFile(FILE* fp, Plane* p)
+{
+	if (!fp)
+		return 0;
+	if (fwrite(&p->serialNum, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(&p->type, sizeof(ePlaneType), 1, fp) != 1)
+		return 0;
+	return 1;
+}
+
+int writePlaneArrToBFile(FILE* fp, Plane* arr, int count)
+{
+	if (fwrite(&count, sizeof(int), 1, fp) != 1)
+		return 0;
+	if (fwrite(arr, sizeof(Plane), count, fp) != count)
+		return 0;
+	return 0;
+}
