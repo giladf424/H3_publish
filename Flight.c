@@ -38,8 +38,6 @@ int		isFlightToDestAirport(const Flight* pFlight, const char* code)
 		return 1;
 
 	return 0;
-
-
 }
 
 int		isPlaneTypeInFlight(const Flight* pFlight, ePlaneType type)
@@ -98,4 +96,9 @@ Airport* setAiportToFlight(const AirportManager* pManager, const char* msg)
 	} while (port == NULL);
 
 	return port;
+}
+
+void freeFlightPtr(void** pFlight)
+{
+	free(*pFlight);
 }

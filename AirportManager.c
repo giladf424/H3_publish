@@ -192,16 +192,6 @@ int initManager(AirportManager* pManager, const char* fileName)
 
 		port->name = malloc(strlen(temp) * sizeof(char));
 		port->country = malloc(strlen(temp) * sizeof(char));
-		
-		//fgets(temp, MAX_STR_LEN, file);
-		//int nameLen = strlen(temp);
-		//strcpy(port->name, temp);
-		//port->name[nameLen] = '\0';
-
-		//fgets(temp, MAX_STR_LEN, file);
-		//int countryLen = strlen(temp);
-		//strcpy(port->country, temp);
-		//port->country[countryLen] = '\0';
 
 		if(!port->name || !port->country)
 		{

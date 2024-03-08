@@ -116,8 +116,7 @@ void	doPrintFlightsWithPlaneType(const Airline* pComp)
 
 void	freeFlightArr(Flight** arr, int size)
 {
-	for (int i = 0; i < size; i++)
-		free(arr[i]);
+	generalArrayFunction(arr, size, sizeof(Flight*), freeFlightPtr);
 }
 
 void	freePlanes(Plane* arr, int size)
