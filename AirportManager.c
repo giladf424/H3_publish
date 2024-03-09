@@ -166,8 +166,9 @@ int initManager(AirportManager* pManager, const char* fileName)
 	if (!file)
 	{
 		printf("Error open file for reading\n");
-		initManagerFile(pManager);
-		return 0;
+		if (!initManagerFile(pManager))
+			return 0;
+		return 2;
 	}
 
 	if (!initManagerFile(pManager))
@@ -187,16 +188,17 @@ int initManager(AirportManager* pManager, const char* fileName)
 		{
 			fclose(file);
 			freeManager(pManager);
-			return 0;
+			return 2;
 		}
 
-		port->name = malloc(strlen(temp) * sizeof(char));
-		port->country = malloc(strlen(temp) * sizeof(char));
+		port->name = (char*)malloc(strlen(temp) * sizeof(char));
+		port->country = (char*)malloc(strlen(temp) * sizeof(char));
 
 		if(!port->name || !port->country)
 		{
 			fclose(file);
-			return 0;
+			freeManager(pManager);
+			return 2;
 		}
 
 		fscanf(file, "%[^\n]", port->name);
@@ -209,7 +211,8 @@ int initManager(AirportManager* pManager, const char* fileName)
 		if (!addAirportToCorrecPlace(pManager, port))
 		{
 			fclose(file);
-			return 0;
+			freeManager(pManager);
+			return 2;
 		}
 	}
 

@@ -23,13 +23,8 @@ int main()
 	AirportManager	manager;
 	Airline			company;
 	
-	if(!initManager(&manager, "authority_airport.txt"))
-	{
-		printf("Error init airport manager\n");
+	if (!initManagerAndAirline(&manager, &company))
 		exit(1);
-	}
-	if(initAirlineFromFile(&company, &manager, "airline.bin") != 1)
-		initAirline(&company);
 
 	int option;
 	int stop = 0;
@@ -109,4 +104,24 @@ int menu()
 	char tav;
 	scanf("%c", &tav);
 	return option;
+}
+
+int initManagerAndAirline(AirportManager* pManager, Airline* pCompany)
+{
+	int res = initManager(pManager, "authority_airport.txt");
+	if (res == 0)
+	{
+		printf("Error init airport manager\n");
+		return 0;
+	}
+	else if (res == 1)
+	{
+		res = initAirlineFromFile(pCompany, pManager, "airline.bin");
+		if (res == 0)
+			initAirline(pCompany);
+		return 1;
+	}
+	else
+		initAirline(pCompany);
+	return 1;
 }
