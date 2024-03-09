@@ -25,5 +25,6 @@ int		compareFlightsBySrcCode(const void* v1, const void* v2);
 int		compareFlightsByDstCode(const void* v1, const void* v2);
 void	freeFlightPtr(void** pFlight);
 int		writeFlightToBFile(FILE* fp, Flight const* pF);
+int		readFlightFromBFile(FILE* fp, Flight* pF, const AirportManager* pManager, Plane* planeArr, int planeCount);
 
 #endif

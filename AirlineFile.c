@@ -12,12 +12,12 @@ int saveAirlineToFile(const Airline* pComp, const char* fileName)
 		printf("Error! file didn't open\n");
 		return 0;
 	}
-	if (writeStringToBFile(fp, pComp->name, "Error! company name wasn't written to file\n") != 1)
+	if (writeStringToBFile(fp, pComp->name, "Error! company name wasn't written to file") != 1)
 	{
 		fclose(fp);
 		return 0;
 	}
-	if (writeIntToBFile(fp, pComp->planeCount, "Error! plane count wasn't written to file\n") != 1)
+	if (writeIntToBFile(fp, pComp->planeCount, "Error! plane count wasn't written to file") != 1)
 	{
 		fclose(fp);
 		return 0;
@@ -28,7 +28,7 @@ int saveAirlineToFile(const Airline* pComp, const char* fileName)
 		fclose(fp);
 		return 0;
 	}
-	if (writeIntToBFile(fp, pComp->flightCount, "Error! flight count wasn't written to file\n") != 1)
+	if (writeIntToBFile(fp, pComp->flightCount, "Error! flight count wasn't written to file") != 1)
 	{
 		fclose(fp);
 		return 0;
@@ -41,5 +41,114 @@ int saveAirlineToFile(const Airline* pComp, const char* fileName)
 			return 0;
 		}
 	}
+	return 1;
+}
+
+int readFlightArrFromBFile(FILE* fp, Airline* pComp, AirportManager* pManager)
+{
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		if (readFlightFromBFile(fp, pComp->flightArr[i], pManager, pComp->planeArr, pComp->planeCount) != 1)
+			return 0;
+	}
+	return 1;
+}
+
+int createPlaneArr(Airline* pComp)
+{
+	pComp->planeArr = (Plane*)malloc(pComp->planeCount * sizeof(Plane));
+	if (!pComp->planeArr)
+	{
+		printf("Memory alocation error!\n");
+		return 0;
+	}
+	return 1;
+}
+
+int createFlightArr(Airline* pComp)
+{
+	if (pComp->flightCount == 0)
+	{
+		pComp->flightArr = NULL;
+	}
+	else {
+		pComp->flightArr = (Flight**)malloc(pComp->flightCount * sizeof(Flight*));
+		if (!pComp->flightArr)
+		{
+			printf("Memory alocation error!\n");
+			return 0;
+		}
+	}
+
+	for (int i = 0; i < pComp->flightCount; i++)
+	{
+		pComp->flightArr[i] = (Flight*)calloc(1, sizeof(Flight));
+		if (!pComp->flightArr[i])
+		{
+			printf("Memory alocation error!\n");
+			return 0;
+		}
+	}
+	return 1;
+}
+
+int initAirlineFromFile(Airline* pComp, AirportManager* pManager, const char* fileName)
+{
+	FILE* fp = fopen(fileName, "rb");
+	if (!fp)
+	{
+		printf("Error! file didn't open\n");
+		return 0;
+	}
+	pComp->flightArr = NULL;
+	pComp->type = eNotSorted;
+	if (readStringFromBFile(fp, pComp->name, "Error! company name wasn't read from file") != 1)
+	{
+		fclose(fp);
+		return 0;
+	}
+	if (readIntFromBFile(fp, &pComp->planeCount, "Error! plane count wasn't read from file") != 1)
+	{
+		free(pComp->name);
+		fclose(fp);
+		return 0;
+	}
+	if (createPlaneArr(pComp) != 1)
+	{
+		free(pComp->name);
+		fclose(fp);
+		return 0;
+	}
+	if (fread(pComp->planeArr, sizeof(Plane), pComp->planeCount, fp) != pComp->planeCount)
+	{
+		printf("Error! planes array wasn't read from file\n");
+		free(pComp->name);
+		free(pComp->planeArr);
+		fclose(fp);
+		return 0;
+	}
+	if (readIntFromBFile(fp, &pComp->flightCount, "Error! flight count wasn't read from file") != 1)
+	{
+		free(pComp->name);
+		free(pComp->planeArr);
+		fclose(fp);
+		return 0;
+	}
+	if (createFlightArr(pComp) != 1)
+	{
+		free(pComp->name);
+		free(pComp->planeArr);
+		fclose(fp);
+		return 0;
+	}
+	if (readFlightArrFromBFile(fp, pComp, pManager) != 1)
+	{
+		free(pComp->name);
+		free(pComp->planeArr);
+		free(pComp->flightArr);
+		fclose(fp);
+		return 0;
+	}
+	fclose(fp);
 	return 1;
 }

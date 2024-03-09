@@ -52,10 +52,22 @@ void printDate(const Date* pDate)
 
 int writeDateToBFile(FILE* fp, Date const* pDate)
 {
-	if (fwrite(pDate, 3 * sizeof(int), 1, fp) != 1)
+	if (fwrite(pDate, sizeof(Date), 1, fp) != 1)
 	{
 		printf("Error! the date wasn't written to the file\n");
 		return 0;
 	}
 	return 1;
 }
+
+int readDateFromBFile(FILE* fp, Date* pDate)
+{
+	if (fread(pDate, sizeof(Date), 1, fp) != 1)
+	{
+		printf("Error! the date wasn't read from the file\n");
+		return 0;
+	}
+	return 1;
+}
+
+

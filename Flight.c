@@ -86,6 +86,39 @@ int writeFlightToBFile(FILE* fp, Flight const* pF)
 	return 1;
 }
 
+int readFlightFromBFile(FILE* fp, Flight* pF, const AirportManager* pManager, Plane* planeArr, int planeCount)
+{
+	int sNum;
+	memset(pF, 0, sizeof(Flight));
+	if (readCharFromBFile(fp, &pF->sourceCode, IATA_LENGTH, "Error! flight source code wasn't read from file\n") != 1)
+		return 0;
+	if (findAirportByCode(pManager, &pF->sourceCode) == NULL)
+	{
+		printf("The airport with %s source code isn't in manager\n", &pF->sourceCode);
+		return 0;
+	}
+	if (readCharFromBFile(fp, &pF->destCode, IATA_LENGTH, "Error! flight dest code wasn't read from file\n") != 1)
+		return 0;
+	if (findAirportByCode(pManager, &pF->destCode) == NULL)
+	{
+		printf("The airport with %s source code isn't in manager\n", &pF->destCode);
+		return 0;
+	}
+	if (readIntFromBFile(fp, &sNum, "Error! flight serial number wasn't read from file\n") != 1)
+		return 0;
+	Plane* pTmp = findPlaneBySN(planeArr, planeCount, sNum);
+	if (pTmp == NULL)
+	{
+		printf("The plane with %d serial number isn't in the company", sNum);
+		return 0;
+	}
+	pF->flightPlane.serialNum = pTmp->serialNum;
+	pF->flightPlane.type = pTmp->type;
+	if (readDateFromBFile(fp, &pF->date) != 1)
+		return 0;
+	return 1;
+}
+
 void	printFlight(const void* pFlight)
 {
 	const Flight* pF = *(const Flight**)pFlight;

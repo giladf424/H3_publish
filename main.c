@@ -28,7 +28,8 @@ int main()
 		printf("Error init airport manager\n");
 		exit(1);
 	}
-	initAirline(&company);
+	if(initAirlineFromFile(&company, &manager, "airline.bin") != 1)
+		initAirline(&company);
 
 	int option;
 	int stop = 0;

@@ -14,5 +14,6 @@ void	getCorrectDate(Date* pDate);
 int		checkDate(char* date, Date* pDate);
 void	printDate(const Date* pDate);
 int		writeDateToBFile(FILE*  fp, Date const* pDate);
+int		readDateFromBFile(FILE* fp, Date* pDate);
 
 #endif
