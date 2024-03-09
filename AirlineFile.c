@@ -102,8 +102,14 @@ int initAirlineFromFile(Airline* pComp, AirportManager* pManager, const char* fi
 	}
 	pComp->flightArr = NULL;
 	pComp->type = eNotSorted;
-	if (readStringFromBFile(fp, pComp->name, "Error! company name wasn't read from file") != 1)
+	int len;
+	if (readIntFromBFile(fp, &len, "Error! the company name length wasn't read from the file") != 1)
+		return 0;
+	pComp->name = (char*)malloc(len * sizeof(char));
+	if (fread(pComp->name, sizeof(char), len, fp) != len)
 	{
+		printf("Error! company name wasn't read from file\n");
+		free(pComp->name);
 		fclose(fp);
 		return 0;
 	}
