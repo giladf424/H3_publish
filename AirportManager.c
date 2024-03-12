@@ -89,7 +89,7 @@ Airport* findAirportByCode(const AirportManager* pManager, const char* code)
 		return NULL;
 	}
 	else {
-		NODE* p = L_find(&(pManager->airports.head), code, isNotAirportCode);
+		const NODE* p = L_find(&(pManager->airports.head), code, isNotAirportCode);
 		if (!p)
 		{
 			return NULL;
@@ -129,7 +129,7 @@ void	freeAirportArr(AirportManager* pManager)
 int getAirportAmount(const AirportManager* pManager)
 {
 	int count = 0;
-	NODE* p = &(pManager->airports.head);
+	const NODE* p = &(pManager->airports.head);
 	while(p->next != NULL)
 	{
 		count++;
@@ -147,7 +147,7 @@ int saveManagerToFile(const AirportManager* pManager, const char* fileName)
 		return 0;
 	}
 
-	NODE* p = &(pManager->airports.head);
+	const NODE* p = &(pManager->airports.head);
 	fprintf(file, "%d\n", getAirportAmount(pManager));
 	while(p->next != NULL)
 	{

@@ -4,7 +4,7 @@
 #include "AirportManager.h"
 #include "General.h"
 #include "AirlineFile.h"
-
+int initManagerAndAirline(AirportManager* pManager, Airline* pCompany);
 typedef enum 
 { 
 	eAddAirport,eAddPlane, eAddFlight, ePrintCompany, ePrintAirports,

@@ -73,11 +73,11 @@ int compareFlightsByDstCode(const void* v1, const void* v2)
 	return strcmp(f1->destCode, f2->destCode);
 }
 
-int writeFlightToBFile(FILE* fp, Flight const* pF)
+int writeFlightToBFile(FILE* fp, const Flight* pF)
 {
-	if (writeCharToBFile(fp, IATA_LENGTH, &pF->sourceCode, "Error! flight source code wasn't written to file\n") != 1)
+	if (writeCharToBFile(fp, IATA_LENGTH, pF->sourceCode, "Error! flight source code wasn't written to file\n") != 1)
 		return 0;
-	if (writeCharToBFile(fp, IATA_LENGTH, &pF->destCode, "Error! flight destination code wasn't written to file\n") != 1)
+	if (writeCharToBFile(fp, IATA_LENGTH, pF->destCode, "Error! flight destination code wasn't written to file\n") != 1)
 		return 0;
 	if (writeIntToBFile(fp, pF->flightPlane.serialNum, "Error! flight plane serial number wasn't written to file\n") != 1)
 		return 0;
@@ -90,16 +90,16 @@ int readFlightFromBFile(FILE* fp, Flight* pF, const AirportManager* pManager, Pl
 {
 	int sNum;
 	memset(pF, 0, sizeof(Flight));
-	if (readCharFromBFile(fp, &pF->sourceCode, IATA_LENGTH, "Error! flight source code wasn't read from file\n") != 1)
+	if (readCharFromBFile(fp, pF->sourceCode, IATA_LENGTH, "Error! flight source code wasn't read from file\n") != 1)
 		return 0;
-	if (findAirportByCode(pManager, &pF->sourceCode) == NULL)
+	if (findAirportByCode(pManager, pF->sourceCode) == NULL)
 	{
 		printf("The airport with %s source code isn't in manager\n", &pF->sourceCode);
 		return 0;
 	}
-	if (readCharFromBFile(fp, &pF->destCode, IATA_LENGTH, "Error! flight dest code wasn't read from file\n") != 1)
+	if (readCharFromBFile(fp, pF->destCode, IATA_LENGTH, "Error! flight dest code wasn't read from file\n") != 1)
 		return 0;
-	if (findAirportByCode(pManager, &pF->destCode) == NULL)
+	if (findAirportByCode(pManager, pF->destCode) == NULL)
 	{
 		printf("The airport with %s source code isn't in manager\n", &pF->destCode);
 		return 0;
